@@ -15,6 +15,7 @@ function* fetchGiphyGifs (action) {
 		// api key: eRkQ774YosOSGmThbU2GmO421oAsXmyV
     try{
         const response = yield axios.get(`https://api.giphy.com/v1/gifs/search?api_key=su7x5YLWWje688tDfOceZmehnGWnCWcJ&q=${action.payload}&limit=25&offset=0&rating=G&lang=en`);
+				console.log(response.data.data);
 				const gifList = response.data.data.map((cur, i) => {
 					return {
 						url: cur.images.fixed_height.url,

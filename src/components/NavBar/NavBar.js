@@ -22,7 +22,8 @@ class NavBar extends Component {
   submitSearch = (event) => {
     event.preventDefault()
     this.props.dispatch({type: "FETCH_GIPHY_GIFS", payload: this.state.searchInput});
-    this.setState({searchInput: ""});
+		this.setState({searchInput: ""});
+		this.props.history.push("/search");
 	}
 
   render() {
