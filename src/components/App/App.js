@@ -21,10 +21,17 @@ class App extends Component {
 				<input type="text" value={this.state.searchInput} onChange={(event) => this.setState({searchInput: event.target.value})}/>
 				<button type="submit">Submit</button>
 				</form>
+				{this.props.giphy[0] && this.props.giphy.map((cur, i) => {
+					return <img src={cur.images.downsized_large.url} />;
+				})}
 			</div>
     );
   }
   
 }
 
-export default connect()(App);
+const mapStateToProps = (state) => {
+	return {giphy: state.giphyReducer};
+}
+
+export default connect(mapStateToProps)(App);
