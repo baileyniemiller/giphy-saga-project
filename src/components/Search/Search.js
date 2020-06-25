@@ -7,7 +7,8 @@ class Search extends Component {
     render () {
         return (
             <div>
-                <GifList/>
+								Search Content
+                {/* <GifList/> */}
 
             </div>
         );

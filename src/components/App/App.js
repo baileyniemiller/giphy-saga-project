@@ -26,9 +26,9 @@ class App extends Component {
 					<Route exact path='/search' component = {Search} />
 				
 				
-				{this.props.giphy[0] && this.props.giphy.map((cur, i) => {
+				{/* {this.props.giphy[0] && this.props.giphy.map((cur, i) => {
 					return <img src={cur.url} />;
-				})}
+				})} */}
 
 				
 				</Router>
