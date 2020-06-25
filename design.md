@@ -26,7 +26,7 @@
 	
 4. Gif component
 	- displays image
-	- has infobar component displayed on hover
+	- has titlebar component displayed on hover
 
 5. TitleBar component
 	  - TitleBar component (pops up on hover)

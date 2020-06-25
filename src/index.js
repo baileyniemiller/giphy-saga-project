@@ -15,8 +15,14 @@ function* fetchGiphyGifs (action) {
 		// api key: eRkQ774YosOSGmThbU2GmO421oAsXmyV
     try{
         const response = yield axios.get(`https://api.giphy.com/v1/gifs/search?api_key=su7x5YLWWje688tDfOceZmehnGWnCWcJ&q=${action.payload}&limit=25&offset=0&rating=G&lang=en`);
-				console.log(response.data);
-				yield put({type: "SET_GIPHY_GIFS", payload: response.data})
+				const gifList = response.data.data.map((cur, i) => {
+					return {
+						url: cur.images.fixed_height.url,
+						title: cur.title,
+					}
+				})
+				console.log(gifList);
+				yield put({type: "SET_GIPHY_GIFS", payload: gifList})
     }catch(error){
 			console.log(error);
         alert('Unable to get Gifs from Giphy')
@@ -63,7 +69,7 @@ function* rootSaga()   {
 const giphyReducer = (state = [], action) => {
   switch (action.type) {
     case 'SET_GIPHY_GIFS':
-      return [...action.payload.data ]
+      return [...action.payload]
     default:
       return state;
   }
