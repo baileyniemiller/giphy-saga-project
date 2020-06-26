@@ -25,7 +25,7 @@ class Gif extends Component {
         <img src={gif.url} alt={gif.title} />
         {this.state.showTileBar && (
           <GridListTileBar
-            title={gif.title}
+            title={<><>Category</><select><option value="test">Test</option></select></>}
             actionIcon={
               <IconButton aria-label={`info about ${gif.title}`}>
                 <FavoriteBorderIcon color="secondary" />
