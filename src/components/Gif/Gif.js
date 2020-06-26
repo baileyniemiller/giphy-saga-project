@@ -19,10 +19,12 @@ class Gif extends Component {
   };
 
   toggleFavorite = () => {
-		this.props.dispatch({type: 'ADD_FAVORITE', payload: this.props.gif});
-		// if(this.props.gif.isFavorited) {
-		// 	this.props.dispatch()
-		// }
+		
+		if(this.props.gif.isFavorited) {
+			this.props.dispatch({type: 'DELETE_FAVORITE', payload: this.props.gif});
+		} else {
+			this.props.dispatch({type: 'ADD_FAVORITE', payload: this.props.gif});
+		}
 	}
 
   render() {

@@ -99,7 +99,7 @@ class NavBar extends Component {
               value={this.state.searchInput} onChange={(event) => this.setState({searchInput: event.target.value})} className="searchIn"
             />
             </Grid>
-						</form>
+            </form>
           </div>
         </Toolbar>
         </Grid>

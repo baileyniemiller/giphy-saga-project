@@ -85,15 +85,15 @@ function* addFavorite(action) {
   }
 }
 
-//function* deleteFavorite (action){
-//      try{
-//          yield axios.delete(`/api/favrite/${action.payload.id}`);
-//          yield put({ type: "FETCH_FAV_GIFS" }); //refresh fav gif list
-//   } catch (error) {
-//     console.log("Error posting favorite");
-//   }
-//      
-//  }
+function* deleteFavorite (action){
+     try{
+         yield axios.delete(`/api/favorite/${action.payload.id}`);
+         yield put({ type: "FETCH_FAV_GIFS" }); //refresh fav gif list
+  } catch (error) {
+    console.log("Error posting favorite");
+  }
+     
+}
 
 
 
@@ -115,6 +115,7 @@ function* rootSaga() {
   yield takeEvery("FETCH_CATEGORIES", fetchCategories);
   yield takeEvery("CAT_ID_TO_FAVS", addCategoryIdToFavs);
   yield takeEvery("ADD_FAVORITE", addFavorite);
+  yield takeEvery("DELETE_FAVORITE", deleteFavorite);
 }
 
 // redux store
