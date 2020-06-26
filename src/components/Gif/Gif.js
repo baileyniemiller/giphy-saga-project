@@ -8,7 +8,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 
 class Gif extends Component {
   state = {
-    showTileBar: false,
+		showTileBar: false,
+		favInSearch: false
   };
 
   sendCategoryID = (event) => {
@@ -19,10 +20,11 @@ class Gif extends Component {
   };
 
   toggleFavorite = () => {
-		
-		if(this.props.gif.isFavorited) {
+		if(this.props.gif.isFavorited || this.state.favInSearch) {
+			this.setState({favInSearch: false})
 			this.props.dispatch({type: 'DELETE_FAVORITE', payload: this.props.gif});
 		} else {
+			this.setState({favInSearch: true})
 			this.props.dispatch({type: 'ADD_FAVORITE', payload: this.props.gif});
 		}
 	}
@@ -43,13 +45,12 @@ class Gif extends Component {
               gif.isFavorited ? (
                 <>
                   <>Category</>
-                  <select value={gif.category_id || undefined} onChange={this.sendCategoryID} >
+                  <select
+                    value={gif.category_id || undefined}
+                    onChange={this.sendCategoryID}
+                  >
                     {this.props.categories?.map((category) => (
-                      <option
-                        value={category.id}
-                      >
-                        {category.name}
-                      </option>
+                      <option value={category.id}>{category.name}</option>
                     ))}
                   </select>
                 </>
@@ -59,17 +60,17 @@ class Gif extends Component {
             }
             actionIcon={
               <IconButton aria-label={`info about ${gif.title}`}>
-                {this.props.gif.isFavorited ? (
+                {this.props.gif.isFavorited || this.state.favInSearch ? (
                   <FavoriteIcon
                     onClick={this.toggleFavorite}
                     color="secondary"
                   />
-                ) : (
+                ) :(
                   <FavoriteBorderIcon
                     onClick={this.toggleFavorite}
                     color="secondary"
                   />
-                )}
+                ) }
               </IconButton>
             }
           >
