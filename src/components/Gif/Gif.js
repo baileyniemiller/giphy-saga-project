@@ -4,14 +4,13 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 class Gif extends Component {
   state = {
     showTileBar: false,
+    isFavorited: false,
   };
-
-  // onMouseEnter={() => setIsShown(true)}
-  //onMouseLeave={() => setIsShown(false)}>
 
   render() {
     const { gif } = this.props;
@@ -25,10 +24,33 @@ class Gif extends Component {
         <img src={gif.url} alt={gif.title} />
         {this.state.showTileBar && (
           <GridListTileBar
-            title={<><>Category</><select><option value="test">Test</option></select></>}
+            title={
+              this.state.isFavorited ? (
+                <>
+                  <>Category</>
+                  <select>
+                    {this.props.categories?.map((category) => (
+                      <option value={category.id}>{category.name}</option>
+                    ))}
+                  </select>
+                </>
+              ) : (
+                gif.title
+              )
+            }
             actionIcon={
               <IconButton aria-label={`info about ${gif.title}`}>
-                <FavoriteBorderIcon color="secondary" />
+                {this.state.isFavorited ? (
+                  <FavoriteIcon
+                    onClick={() => this.setState({ isFavorited: false })}
+                    color="secondary"
+                  />
+                ) : (
+                  <FavoriteBorderIcon
+                    onClick={() => this.setState({ isFavorited: true })}
+                    color="secondary"
+                  />
+                )}
               </IconButton>
             }
           >
@@ -40,4 +62,10 @@ class Gif extends Component {
   }
 }
 
-export default connect()(Gif);
+const mapStateToProps = (state) => {
+  return {
+    categories: state.categoriesReducer,
+  };
+};
+
+export default connect(mapStateToProps)(Gif);
