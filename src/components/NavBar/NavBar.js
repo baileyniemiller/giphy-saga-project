@@ -84,9 +84,10 @@ class NavBar extends Component {
           </Typography>
           </Grid>
           <div className="search">
-            <div className="searchIcon">
+						<form onSubmit={this.submitSearch}>
+            <IconButton type="submit" className="searchIcon" >
               <SearchIcon />
-            </div>
+            </IconButton>
             <Grid item xs={6} >
             <InputBase
               placeholder="Search…"
@@ -98,6 +99,7 @@ class NavBar extends Component {
               value={this.state.searchInput} onChange={(event) => this.setState({searchInput: event.target.value})} className="searchIn"
             />
             </Grid>
+						</form>
           </div>
         </Toolbar>
         </Grid>

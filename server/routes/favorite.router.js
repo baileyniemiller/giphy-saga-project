@@ -60,16 +60,17 @@ const router = express.Router();
 //V2 of the post, doesnt do all the fancy stuff. It just puts the name of the image into the database
 
 router.post("/", (req, res) => {
+	console.log("hit post /api/favorite", req.body);
   // sample of req.body: {
-  //   image_name: 'Cat'
+  //   image_name: 'Cat', url: 'https://whwhwh' 
   // }
   // pull out req.body
   const newFav = req.body;
 
   //set up a query to the favorite table to insert the name of the image and the category_id
-  const favoriteQuery = `INSERT INTO "favorites" ("name") VALUES ($1);`;
+  const favoriteQuery = `INSERT INTO "favorites" ("name", "url") VALUES ($1,$2);`;
   //store the query values
-  const favQueryValue = [newFav.image_name];
+  const favQueryValue = [newFav.image_name, newFav.url];
 
   pool
     .query(favoriteQuery, favQueryValue)

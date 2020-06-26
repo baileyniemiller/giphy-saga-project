@@ -16,7 +16,7 @@ class GifList extends React.Component {
         <GridListTile key="subheader" cols={5} style={{ height: "auto" }}>
           <ListSubheader component="div">{this.props.view}</ListSubheader>
         </GridListTile>
-        {this.props.gifs[0] && this.props.gifs.map((cur, i) => <Gif gif={cur} />)}
+        {this.props.gifs[0] && this.props.gifs.map((cur, i) => <Gif key={`gif-${i}`} gif={cur} />)}
       </GridList>
     );
   }

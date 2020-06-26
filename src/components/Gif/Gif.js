@@ -9,8 +9,21 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 class Gif extends Component {
   state = {
     showTileBar: false,
-    isFavorited: false,
   };
+
+  sendCategoryID = (gifId, categoryID) => {
+    this.dispatch({
+      type: "CAT_ID_TO_FAVS",
+      payload: { categoryID: categoryID, gifId: gifId },
+    });
+  };
+
+  toggleFavorite = () => {
+		this.props.dispatch({type: 'ADD_FAVORITE', payload: this.props.gif});
+		// if(this.props.gif.isFavorited) {
+		// 	this.props.dispatch()
+		// }
+	}
 
   render() {
     const { gif } = this.props;
@@ -30,7 +43,14 @@ class Gif extends Component {
                   <>Category</>
                   <select>
                     {this.props.categories?.map((category) => (
-                      <option value={category.id}>{category.name}</option>
+                      <option
+                        onClick={(event) =>
+                          this.sendCategoryID(gif.id, category.id)
+                        }
+                        value={category.id}
+                      >
+                        {category.name}
+                      </option>
                     ))}
                   </select>
                 </>
@@ -40,14 +60,14 @@ class Gif extends Component {
             }
             actionIcon={
               <IconButton aria-label={`info about ${gif.title}`}>
-                {this.state.isFavorited ? (
+                {this.props.gif.isFavorited ? (
                   <FavoriteIcon
-                    onClick={() => this.setState({ isFavorited: false })}
+                    onClick={this.toggleFavorite}
                     color="secondary"
                   />
                 ) : (
                   <FavoriteBorderIcon
-                    onClick={() => this.setState({ isFavorited: true })}
+                    onClick={this.toggleFavorite}
                     color="secondary"
                   />
                 )}
