@@ -47,8 +47,12 @@ function* fetchFavGifs(action) {
   // yield axios
   // dispatch the result with put!
   try {
-    const response = yield axios.get("/api/favorite");
-    yield put({ type: "SET_FAV_GIFS", payload: response.data });
+		const response = yield axios.get("/api/favorite");
+		const moddedRes = response.data.map((cur, i) => {
+			cur.isFavorited = true;
+			return cur
+		})
+    yield put({ type: "SET_FAV_GIFS", payload: moddedRes });
   } catch (error) {
     console.log("Error getting favorites ", error);
   }
@@ -59,7 +63,7 @@ function* addCategoryIdToFavs(action) {
     //incoming action.payload looks like: {categoryID: categoryID, gifId: gifId}
     yield axios.put(
       `/api/favorite/${action.payload.gifId}`,
-      action.payload.categoryID
+      {category: action.payload.categoryID}
     );
     console.log("Success sending category id to the server");
   } catch (error) {
@@ -79,7 +83,19 @@ function* addFavorite(action) {
     console.log("Error posting favorite");
   }
 }
-//  {image_name: 'Cat'}
+
+//function* deleteFavorite (action){
+//      try{
+//          yield axios.delete(`/api/favrite/${action.payload.id}`);
+//          yield put({ type: "FETCH_FAV_GIFS" }); //refresh fav gif list
+//   } catch (error) {
+//     console.log("Error posting favorite");
+//   }
+//      
+//  }
+
+
+
 
 // sagas
 // rootsaga

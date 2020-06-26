@@ -11,10 +11,10 @@ class Gif extends Component {
     showTileBar: false,
   };
 
-  sendCategoryID = (gifId, categoryID) => {
-    this.dispatch({
+  sendCategoryID = (event) => {
+    this.props.dispatch({
       type: "CAT_ID_TO_FAVS",
-      payload: { categoryID: categoryID, gifId: gifId },
+      payload: { categoryID: event.target.value, gifId: this.props.gif.id },
     });
   };
 
@@ -38,15 +38,12 @@ class Gif extends Component {
         {this.state.showTileBar && (
           <GridListTileBar
             title={
-              this.state.isFavorited ? (
+              gif.isFavorited ? (
                 <>
                   <>Category</>
-                  <select>
+                  <select value={gif.category_id || undefined} onChange={this.sendCategoryID} >
                     {this.props.categories?.map((category) => (
                       <option
-                        onClick={(event) =>
-                          this.sendCategoryID(gif.id, category.id)
-                        }
                         value={category.id}
                       >
                         {category.name}

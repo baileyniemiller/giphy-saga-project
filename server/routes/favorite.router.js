@@ -60,7 +60,7 @@ const router = express.Router();
 //V2 of the post, doesnt do all the fancy stuff. It just puts the name of the image into the database
 
 router.post("/", (req, res) => {
-	console.log("hit post /api/favorite", req.body);
+	console.log("hit POST /api/favorite/");
   // sample of req.body: {
   //   image_name: 'Cat', url: 'https://whwhwh' 
   // }
@@ -85,11 +85,11 @@ router.post("/", (req, res) => {
 
 // return all favorite images
 router.get("/", (req, res) => {
+	console.log("hit GET /api/favorite/");
   const queryText = `SELECT * FROM favorites ORDER BY name ASC`;
   pool
     .query(queryText)
     .then((result) => {
-      console.log("got result, here it is:", result);
       res.send(result.rows);
     })
     .catch((error) => {
@@ -102,12 +102,13 @@ router.get("/", (req, res) => {
 // update given favorite with a category id
 router.put("/:favId", (req, res) => {
   // req.body should contain a category_id to add to this favorite image
+	console.log("hit PUT /api/favorite/:favID",req.body);
+	const category = req.body.category;
 
-  const updatedFav = req.body;
   //{category_id: 11}
   const imageId = req.params.favId;
   const queryText = `UPDATE "favorites" SET "category_id" = $1 WHERE id=$2`;
-  const queryValues = [updatedFav.category_id, imageId];
+  const queryValues = [category, imageId];
 
   pool
     .query(queryText, queryValues)
@@ -121,6 +122,7 @@ router.put("/:favId", (req, res) => {
 });
 
 router.delete("/:favId", (req, res) => {
+	console.log("hit DELETE /api/favorite/:favID");
   const queryText = 'DELETE FROM "favorites" WHERE id=$1';
 
   pool
