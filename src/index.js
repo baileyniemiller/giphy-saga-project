@@ -64,7 +64,8 @@ function* addCategoryIdToFavs(action) {
     yield axios.put(
       `/api/favorite/${action.payload.gifId}`,
       {category: action.payload.categoryID}
-    );
+		);
+		yield put({type: "FETCH_FAV_GIFS"})
     console.log("Success sending category id to the server");
   } catch (error) {
     console.log("Error putting category ID into favorites", error);
